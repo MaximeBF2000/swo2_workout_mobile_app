@@ -1,0 +1,59 @@
+# --- MOBILE APP FRONT -----------------------------------------------------------
+
+# OSX
+mobile/.DS_Store
+
+# Xcode
+mobile/build/
+mobile/*.pbxuser
+mobile/!default.pbxuser
+mobile/*.mode1v3
+mobile/!default.mode1v3
+mobile/*.mode2v3
+mobile/!default.mode2v3
+mobile/*.perspectivev3
+mobile/!default.perspectivev3
+mobile/xcuserdata
+mobile/*.xccheckout
+mobile/*.moved-aside
+mobile/DerivedData
+mobile/*.hmap
+mobile/*.ipa
+mobile/*.xcuserstate
+mobile/project.xcworkspace
+
+# Android/IntelliJ
+mobile/build/
+mobile/.idea
+mobile/.gradle
+mobile/local.properties
+mobile/*.iml
+mobile/*.hprof
+
+# node.js
+mobile/node_modules/
+mobile/npm-debug.log
+mobile/yarn-error.log
+
+# BUCK
+mobile/buck-out/
+mobile/\.buckd/
+mobile/*.keystore
+mobile/!debug.keystore
+
+# Bundle artifacts
+mobile/*.jsbundle
+
+# CocoaPods
+mobile/ios/Pods/
+
+# Expo
+mobile/.expo/
+mobile/web-build/
+mobile/dist/
+
+# --- NODE ------------------------------------------------------------------------
+
+server/node_modules
+server/.env
+server/yarn-error.log

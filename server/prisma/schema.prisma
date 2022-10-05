@@ -1,0 +1,63 @@
+// Docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("file:../db/main.db")
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  email String
+  password String
+  // trainings Training[]
+  // sessions Session[]
+  // series Serie[]
+  // exercices Exercice[]
+}
+
+model Training {
+  id Int @id @default(autoincrement())
+  name String
+  sessions Session[]
+}
+
+model Session {
+  id Int @id @default(autoincrement())
+  name String
+  training Training @relation(fields: [trainingId], references: [id])
+  trainingId Int
+  series Serie[]
+  exercices Exercice[]
+}
+
+model Serie {
+  id Int @id @default(autoincrement())
+  date DateTime @default(now())
+  reps Int
+  weight Float
+  note String
+  spoted Boolean
+  exercice Exercice @relation(fields: [exerciceId], references: [id])
+  exerciceId Int
+  session Session @relation(fields: [sessionId], references: [id])
+  sessionId Int
+}
+
+model Exercice {
+  id Int @id @default(autoincrement())
+  name String
+  category ExerciceCategory @relation(fields: [categoryId], references: [id])
+  categoryId Int
+  sessions Session[]
+  series Serie[]
+}
+
+model ExerciceCategory {
+  id Int @id @default(autoincrement())
+  name String
+  exercices Exercice[]
+}
