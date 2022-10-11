@@ -16,11 +16,12 @@ export const EditableTraining = ({
       <View style={tw`flex-1 mr-12`}>
         <TextField
           placeholder={titlePlaceholder}
-          style={tw`font-medium w-full border-0 border-b border-gray-300 rounded mb-2`}
+          style={tw`mb-2`}
+          textStyle={tw`font-medium w-full border-0 border-b border-gray-300`}
         />
         <TextField
           placeholder={descriptionPlaceholder}
-          style={tw`font-medium w-full border-0 border-b border-gray-300 rounded`}
+          textStyle={tw`font-medium w-full border-0 border-b border-gray-300`}
         />
       </View>
       <Pressable

@@ -1,5 +1,5 @@
 export const storeInitialState = {
-  showLogin: true,
+  user: null,
   timer: '00:00',
   dispatch: () => {}
 }

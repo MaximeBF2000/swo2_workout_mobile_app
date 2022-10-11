@@ -1,26 +1,22 @@
 import tw from 'twrnc'
-import { Pressable, ScrollView, Text, View } from 'react-native'
-import {
-  BottomBar,
-  EditableTraining,
-  TextField,
-  TrainingListItem
-} from '../components'
+import { ScrollView, Text } from 'react-native'
+import { BottomBar, EditableTraining, TrainingListItem } from '../components'
 import { useStore } from '../features/store'
+import { ApiClient } from '../features/apiClient'
 import { useToggle } from '../hooks'
 
 export const TrainingsScreen = ({ navigation }) => {
+  const { dispatch, user } = useStore()
   const [showAddTraining, toggleShowAddTraining] = useToggle()
-  const { showLogin } = useStore()
 
   const navigate = () => {
     navigation.navigate('Sessions', {})
   }
 
   const createTraining = () => {
-    console.warn({ showLogin })
     // CREATE TRAINING WITH USER_ID OF USER IN ASYNC STORAGE
     // NAVIGATE TO THE CREATED TRAINING
+    ApiClient
   }
 
   return (

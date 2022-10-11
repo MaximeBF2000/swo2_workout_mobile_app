@@ -2,5 +2,11 @@
   "name": "swo_2",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT"
+  "scripts": {
+    "client": "yarn --cwd ./mobile start",
+    "server": "yarn --cwd ./server start",
+    "serverDev": "yarn --cwd ./server dev"
+  },
+  "license": "MIT",
+  "dependencies": {}
 }

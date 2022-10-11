@@ -6,6 +6,8 @@ export const storeReducer = (state, action) => {
   switch (get(action, 'type')) {
     case 'toggleShowLogin':
       return { ...state, showLogin: !get(state, 'showLogin') }
+    case 'setUser':
+      return { ...state, user: payload }
     default:
       return state
   }

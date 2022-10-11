@@ -1,13 +1,42 @@
 import tw from 'twrnc'
-import { useState } from 'react'
-import { View, Text, TextInput } from 'react-native'
+import { View, TextInput, Pressable } from 'react-native'
+import { FontAwesome5 } from '@expo/vector-icons'
+import { useToggle } from '../hooks'
 
-export const TextField = ({ style, ...props }) => {
+export const TextField = ({
+  style,
+  textStyle,
+  clearButtonMode,
+  autoCapitalize,
+  secure,
+  ...props
+}) => {
+  const [showEntry, toggleShowEntry] = useToggle()
+  const [focusing, toggleFocusing] = useToggle()
+
   return (
-    <TextInput
-      clearButtonMode="always"
-      style={[tw`border px-2 py-3`, style]}
-      {...props}
-    />
+    <View style={[tw`relative`, style]}>
+      <TextInput
+        style={[tw`border px-2 py-3`, textStyle]}
+        clearButtonMode={clearButtonMode ?? 'always'}
+        autoCapitalize={autoCapitalize ?? 'none'}
+        secureTextEntry={secure && !showEntry}
+        onFocus={() => toggleFocusing(true)}
+        onBlur={() => toggleFocusing(false)}
+        {...props}
+      />
+      {secure && focusing && (
+        <Pressable
+          onPress={toggleShowEntry}
+          style={[tw`absolute right-8 top-0 bottom-0 justify-center`]}
+        >
+          <FontAwesome5
+            name={showEntry ? 'eye-slash' : 'eye'}
+            size={20}
+            color="gray"
+          />
+        </Pressable>
+      )}
+    </View>
   )
 }

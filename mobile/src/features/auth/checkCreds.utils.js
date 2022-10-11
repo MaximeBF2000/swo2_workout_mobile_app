@@ -31,5 +31,5 @@ export const checkCreds = (
   if (!hasLower(password) || !hasUpper(password) || !hasNumber(password))
     errors.push(CREDS_ERRORS.password_weak)
 
-  return errors.length > 0 ? errors : null
+  return errors
 }

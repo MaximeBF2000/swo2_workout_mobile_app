@@ -5,24 +5,26 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("file:../db/main.db")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
   id Int @id @default(autoincrement())
-  email String
+  email String @unique
   password String
-  // trainings Training[]
-  // sessions Session[]
-  // series Serie[]
-  // exercices Exercice[]
+  trainings Training[]
+  sessions Session[]
+  series Serie[]
+  exercices Exercice[]
 }
 
 model Training {
   id Int @id @default(autoincrement())
   name String
   sessions Session[]
+  user User @relation(fields: [userId], references: [id])
+  userId Int
 }
 
 model Session {
@@ -32,6 +34,8 @@ model Session {
   trainingId Int
   series Serie[]
   exercices Exercice[]
+  user User @relation(fields: [userId], references: [id])
+  userId Int
 }
 
 model Serie {
@@ -45,6 +49,8 @@ model Serie {
   exerciceId Int
   session Session @relation(fields: [sessionId], references: [id])
   sessionId Int
+  user User @relation(fields: [userId], references: [id])
+  userId Int
 }
 
 model Exercice {
@@ -54,6 +60,8 @@ model Exercice {
   categoryId Int
   sessions Session[]
   series Serie[]
+  user User @relation(fields: [userId], references: [id])
+  userId Int
 }
 
 model ExerciceCategory {

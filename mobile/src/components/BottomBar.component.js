@@ -7,6 +7,7 @@ import { useToggle } from '../hooks'
 export const BottomBar = ({ onPress = () => {} }) => {
   const [playing, togglePlaying] = useToggle()
   const { timer } = useStore()
+
   return (
     <View
       style={tw`absolute flex-row items-center justify-between bottom-0 w-full bg-white py-4 pl-8 pr-32 border-t border-gray-100`}
