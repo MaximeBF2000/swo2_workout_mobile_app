@@ -1,6 +1,6 @@
 import tw from 'twrnc'
 import { ScrollView } from 'react-native'
-import { BottomBar, Modal, SeriesBox } from '../components'
+import { BottomBar, SeriesBox } from '../components'
 import { map } from 'lodash'
 
 const SERIES_BY_DATES = {
@@ -26,9 +26,6 @@ export const SeriesScreen = ({ navigation }) => {
 
   return (
     <>
-      {/* <Modal open={modalOpen} onClose={() => console.warn('hey')}>
-        <Text>Modal</Text>
-      </Modal> */}
       <ScrollView style={tw`px-2 mt-8 mb-12`}>
         {map(SERIES_BY_DATES, (seriesByDate, date) => (
           <SeriesBox
