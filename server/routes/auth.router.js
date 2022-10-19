@@ -9,8 +9,6 @@ authRouter.post('/', async (req, res) => {
   const salt = await bcrypt.genSalt()
   const hashedPassword = await bcrypt.hash(password, salt)
 
-  console.warn({ email, password })
-
   const { password: _, ...user } = await prisma.user.create({
     data: { email, password: hashedPassword }
   })

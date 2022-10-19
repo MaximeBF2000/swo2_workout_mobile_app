@@ -13,7 +13,6 @@ export const useTimer = () => {
 
   const play = () => {
     const interval = setInterval(() => {
-      console.warn('increment')
       dispatch('incrementTimer')
     }, 1000)
     setTimerInterval(interval)
