@@ -5,7 +5,6 @@ import { AllExercicesScreen, TimerScreen } from '../../screens'
 import { TrainingsStackNavigator } from './TrainingsStackNavigator.component'
 import { CalendarStackNavigator } from './CalendarStackNavigator.component'
 import { genId } from '../../utils/string'
-import { BottomBar } from '../../components/BottomBar.component'
 
 const Tabs = createBottomTabNavigator()
 

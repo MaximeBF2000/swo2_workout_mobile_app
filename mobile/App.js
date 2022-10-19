@@ -1,8 +1,8 @@
-import { NavigationContainer } from '@react-navigation/native'
-import { isEmpty } from 'lodash'
 import { useEffect } from 'react'
+import { isEmpty } from 'lodash'
+import { NavigationContainer } from '@react-navigation/native'
 import { LocalPhoneStorage } from './src/features/localPhoneStorage'
-import { TabNavigator } from './src/features/navigation/TabNavigator.component'
+import { TabNavigator } from './src/features/navigation'
 import { StoreProvider, StoreConsumer } from './src/features/store'
 import { LoginScreen } from './src/screens'
 

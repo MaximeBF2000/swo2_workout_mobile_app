@@ -3,7 +3,7 @@ import { prisma } from '../prisma/index.js'
 
 export const seriesRouter = Router()
 
-seriesRouter.post('/create', async (req, res) => {
+seriesRouter.post('/', async (req, res) => {
   const {
     reps,
     weight,
@@ -31,21 +31,33 @@ seriesRouter.post('/create', async (req, res) => {
   return res.json({ serie })
 })
 
-seriesRouter.get('/seriesByDate', async (req, res) => {
-  const { sessionId, date } = req?.params ?? {}
+/**
+ * {
+ *  date: session.date,
+ *  ...serie
+ * }
+ */
+seriesRouter.get('/byDate', async (req, res) => {
+  const { sessionId, date } = req?.query ?? {}
 
   const series = await prisma.serie.findMany({
     take: 15,
     include: { exercice: true },
     orderBy: { date: 'desc' },
-    where: { sessionId, date }
+    where: { sessionId: parseInt(sessionId), date }
   })
 
   return res.json({ series })
 })
 
-seriesRouter.get('/seriesByExercice', async (req, res) => {
-  const { sessionId, exerciceId } = req?.params ?? {}
+/**
+ * {
+ *  exercice: { ...exercice }
+ *  serie: { ...serie }
+ * }
+ */
+seriesRouter.get('/byExercice', async (req, res) => {
+  const { sessionId, exerciceId } = req?.query ?? {}
 
   const series = await prisma.serie.findMany({
     take: 15,

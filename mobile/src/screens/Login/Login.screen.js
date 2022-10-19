@@ -1,9 +1,7 @@
 import tw from 'twrnc'
-import { useEffect } from 'react'
 import { View, Text } from 'react-native'
 import { Button, TextField } from '../../components'
 import { useDisplayError, useFormState, useToggle } from '../../hooks'
-import { useStore } from '../../features/store'
 import { useLogin, useRegister } from './login.utils'
 
 export const LoginScreen = () => {

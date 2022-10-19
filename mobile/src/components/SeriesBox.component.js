@@ -7,8 +7,11 @@ import {
   FontAwesome
 } from '@expo/vector-icons'
 import { genId } from '../utils/string'
+import { useStore } from '../features/store'
 
 export const SeriesBox = ({ title, series, style }) => {
+  const { inEditMode } = useStore()
+
   const addSerie = () => {}
 
   return (
@@ -34,14 +37,16 @@ export const SeriesBox = ({ title, series, style }) => {
               </Text>
             </View>
             <View style={tw`flex-row items-center justify-between flex-1`}>
-              <FontAwesome name="trash-o" size={20} color="black" />
+              {inEditMode && (
+                <FontAwesome name="trash-o" size={20} color="black" />
+              )}
               <MaterialCommunityIcons
-                name="arm-flex-outline"
-                color="black"
+                name={get(serie, 'spotted') ? 'arm-flex' : 'arm-flex-outline'}
+                color={get(serie, 'spotted') ? 'orange' : 'black'}
                 size={20}
               />
-              <MaterialCommunityIcons
-                name="note-edit"
+              <FontAwesome
+                name={get(serie, 'note') ? 'sticky-note' : 'sticky-note-o'}
                 size={20}
                 color="black"
               />

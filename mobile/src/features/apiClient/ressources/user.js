@@ -1,7 +1,15 @@
-export async function _getUserByEmail(email) {
-  const { data } = await server.get(`/api/auth/${email}`)
+import { get } from 'lodash'
+import { server } from '../serverInstance'
 
-  return data?.user
+export async function _getUser(email, password) {
+  const { data } = await server.get('/api/auth', {
+    params: {
+      email,
+      password
+    }
+  })
+
+  return { error: get(data, 'error'), user: get(data, 'user') }
 }
 
 export async function _registerUser(email, password) {
@@ -10,5 +18,5 @@ export async function _registerUser(email, password) {
     password
   })
 
-  return data?.user
+  return { error: get(data, 'error'), user: get(data, 'user') }
 }

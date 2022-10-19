@@ -1,5 +1,6 @@
 export const storeInitialState = {
   user: null,
-  timer: '00:00',
+  timer: { seconds: 0, minutes: 0 },
+  inEditMode: false,
   dispatch: () => {}
 }

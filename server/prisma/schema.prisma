@@ -14,6 +14,7 @@ model User {
   email String @unique
   password String
   trainings Training[]
+  workouts Workout[]
   sessions Session[]
   series Serie[]
   exercices Exercice[]
@@ -22,16 +23,28 @@ model User {
 model Training {
   id Int @id @default(autoincrement())
   name String
+  description String
+  workouts Workout[]
+  user User @relation(fields: [userId], references: [id])
+  userId Int
+}
+
+model Workout {
+  id Int @id @default(autoincrement())
+  name String
+  description String
   sessions Session[]
+  training Training @relation(fields: [trainingId], references: [id])
+  trainingId Int
   user User @relation(fields: [userId], references: [id])
   userId Int
 }
 
 model Session {
   id Int @id @default(autoincrement())
-  name String
-  training Training @relation(fields: [trainingId], references: [id])
-  trainingId Int
+  date DateTime @default(now())
+  workout Workout @relation(fields: [workoutId], references: [id])
+  workoutId Int
   series Serie[]
   exercices Exercice[]
   user User @relation(fields: [userId], references: [id])
@@ -40,11 +53,10 @@ model Session {
 
 model Serie {
   id Int @id @default(autoincrement())
-  date DateTime @default(now())
   reps Int
   weight Float
   note String
-  spoted Boolean
+  spoted Boolean @default(false)
   exercice Exercice @relation(fields: [exerciceId], references: [id])
   exerciceId Int
   session Session @relation(fields: [sessionId], references: [id])
@@ -56,6 +68,7 @@ model Serie {
 model Exercice {
   id Int @id @default(autoincrement())
   name String
+  description String
   category ExerciceCategory @relation(fields: [categoryId], references: [id])
   categoryId Int
   sessions Session[]

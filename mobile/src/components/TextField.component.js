@@ -6,6 +6,8 @@ import { useToggle } from '../hooks'
 export const TextField = ({
   style,
   textStyle,
+  value,
+  onChangeText = () => {},
   clearButtonMode,
   autoCapitalize,
   secure,
@@ -18,6 +20,8 @@ export const TextField = ({
     <View style={[tw`relative`, style]}>
       <TextInput
         style={[tw`border px-2 py-3`, textStyle]}
+        value={value}
+        onChangeText={onChangeText}
         clearButtonMode={clearButtonMode ?? 'always'}
         autoCapitalize={autoCapitalize ?? 'none'}
         secureTextEntry={secure && !showEntry}

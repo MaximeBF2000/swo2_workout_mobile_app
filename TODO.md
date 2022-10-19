@@ -1,7 +1,5 @@
 # SWO --- TODO
 
-- [ ] Prisma: Update schema (move Date property from serie to session)
-
 - [ ] ApiClient: Create GET functions for `trainingsByUserId`, `sessionsByTrainingId`, `SeriesByExerciceBySessionId`
 - [ ] Front/HomeView: useSWR to fetch trainings, sessions, series in Home View
 

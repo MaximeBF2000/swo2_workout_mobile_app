@@ -1,3 +1,5 @@
+import { server } from '../serverInstance'
+
 export async function _createExercice(exercice) {
   return exercice
 }

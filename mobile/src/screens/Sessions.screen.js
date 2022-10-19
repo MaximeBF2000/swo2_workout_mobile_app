@@ -7,7 +7,7 @@ export const SessionsScreen = ({ navigation }) => {
   const [showAddSession, toggleShowAddSession] = useToggle()
 
   const navigate = () => {
-    navigation.navigate('Exercices', {})
+    navigation.navigate('Series', {})
   }
 
   const createSession = () => {}

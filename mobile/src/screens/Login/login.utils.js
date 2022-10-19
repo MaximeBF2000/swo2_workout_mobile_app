@@ -1,4 +1,5 @@
 import { isEmpty } from 'lodash'
+import { useCallback } from 'react'
 import { ApiClient } from '../../features/apiClient'
 import { checkCreds } from '../../features/auth'
 import { LocalPhoneStorage } from '../../features/localPhoneStorage'
@@ -16,19 +17,20 @@ const checkForCredentials = (creds, options) => {
 export const useLogin = ({ email, password }, onErrors = () => {}) => {
   const { dispatch } = useStore()
 
-  const handleLogin = async () => {
+  const handleLogin = useCallback(async () => {
     try {
       await checkForCredentials({ email, password })
 
-      const user = await ApiClient.getUserByEmail(email)
-      if (isEmpty(user)) return onErrors(['User does not exist'])
+      const { user, error } = (await ApiClient.getUser(email, password)) ?? {}
+
+      if (isEmpty(user) || error) return onErrors(['Invalid credentials'])
 
       await LocalPhoneStorage.setItem('user', user)
       dispatch('setUser', user)
     } catch (errors) {
       onErrors(errors)
     }
-  }
+  }, [email, password, onErrors, dispatch])
 
   return handleLogin
 }
@@ -39,24 +41,34 @@ export const useRegister = (
 ) => {
   const { dispatch } = useStore()
 
-  const handleRegister = async () => {
+  const handleRegister = useCallback(async () => {
     try {
       await checkForCredentials(
         { email, password, confirmPassword },
         { checkComfirmPassword: true }
       )
 
-      const hasUser = await ApiClient.getUserByEmail(email)
+      const { user: hasUser } = (await ApiClient.getUser(email, password)) ?? {}
       if (!isEmpty(hasUser)) return onErrors(['User Already exists'])
 
-      const user = await ApiClient.registerUser(email, password)
+      const { user } = (await ApiClient.registerUser(email, password)) ?? {}
       await LocalPhoneStorage.setItem('user', user)
       dispatch('setUser', user)
-      console.warn({ user })
     } catch (errors) {
-      onErrors(errors)
+      if (Array.isArray(errors)) onErrors(errors)
     }
-  }
+  }, [email, password, confirmPassword, onErrors, dispatch])
 
   return handleRegister
+}
+
+export const useLogout = () => {
+  const { dispatch } = useStore()
+
+  const logout = async () => {
+    await LocalPhoneStorage.removeItem('user')
+    dispatch('setUser', null)
+  }
+
+  return logout
 }
