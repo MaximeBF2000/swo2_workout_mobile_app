@@ -4,7 +4,7 @@ import { includes } from 'lodash'
 import { View, Text, Pressable } from 'react-native'
 import { TextField } from './TextField.component'
 
-export const EditableTraining = ({
+export const EditableListItem = ({
   titlePlaceholder,
   descriptionPlaceholder,
   defaultTitle = '',

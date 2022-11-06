@@ -9,21 +9,28 @@ export const incrementTimer = state => {
   if (seconds === 59)
     return {
       ...state,
-      timer: { minutes: minutes + 1, seconds: 0 }
+      timer: { ...get(state, 'timer'), minutes: minutes + 1, seconds: 0 }
     }
 
   return {
     ...state,
-    timer: { minutes, seconds: seconds + 1 }
+    timer: { ...get(state, 'timer'), minutes, seconds: seconds + 1 }
   }
 }
 
 export const resetTimer = state => {
   return {
     ...state,
+    timer: { ...get(state, 'timer'), playing: false, minutes: 0, seconds: 0 }
+  }
+}
+
+export const setTimerPlaying = (state, payload) => {
+  return {
+    ...state,
     timer: {
-      minutes: 0,
-      seconds: 0
+      ...get(state, 'timer'),
+      playing: payload
     }
   }
 }

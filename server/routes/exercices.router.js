@@ -1,16 +1,16 @@
 import { Router } from 'express'
-import { prisma } from '../prisma/index.js'
+import {
+  createExercices,
+  getExerciceById,
+  getExercicesByCategory,
+  getExercicesBySession,
+  getExercicesByWorkout
+} from '../controllers/exercices.controller.js'
 
 export const exercicesRouter = Router()
 
-exercicesRouter.get('/bySession', async (req, res) => {
-  const { sessionId } = req?.query ?? {}
-
-  const exercices = await prisma.exercice.findMany({
-    where: {
-      sessions: { every: { id: parseInt(sessionId) } }
-    }
-  })
-
-  return res.json({ exercices })
-})
+exercicesRouter.post('/', createExercices)
+exercicesRouter.get('/', getExerciceById)
+exercicesRouter.get('/byCategory', getExercicesByCategory)
+exercicesRouter.get('/byWorkout', getExercicesByWorkout)
+exercicesRouter.get('/bySession', getExercicesBySession)

@@ -5,6 +5,7 @@ import { AllExercicesScreen, TimerScreen } from '../../screens'
 import { TrainingsStackNavigator } from './TrainingsStackNavigator.component'
 import { CalendarStackNavigator } from './CalendarStackNavigator.component'
 import { genId } from '../../utils/string'
+import { HeaderEditButton } from '../../components'
 
 const Tabs = createBottomTabNavigator()
 
@@ -51,10 +52,15 @@ const TabsRoutes = [
   }
 ]
 
+const screenOptions = { headerRight: HeaderEditButton }
+
 export const TabNavigator = () => {
   return (
     <>
-      <Tabs.Navigator initialRouteName="Trainings">
+      <Tabs.Navigator
+        initialRouteName="Trainings"
+        screenOptions={screenOptions}
+      >
         {map(TabsRoutes, route => (
           <Tabs.Screen {...route} key={genId()} />
         ))}

@@ -1,10 +1,13 @@
 import tw from 'twrnc'
 import { View, Text } from 'react-native'
 import { Calendar } from '../components'
+import moment from 'moment'
 
 export const CalendarScreen = ({ navigation }) => {
-  const navigateToDayTraining = day => {
-    navigation.navigate('DayTraining', { day })
+  const navigateToDayTraining = date => {
+    navigation.navigate('DayTraining', {
+      date: moment(date).format('DD/MM/YYYY')
+    })
   }
 
   return (

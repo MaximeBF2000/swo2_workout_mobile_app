@@ -1,5 +1,5 @@
 import { createStackNavigator } from '@react-navigation/stack'
-import { map } from 'lodash'
+import { get, map } from 'lodash'
 import { genId } from '../../utils/string'
 import { CalendarScreen, DayTrainingScreen } from '../../screens'
 
@@ -12,7 +12,10 @@ const stackRoutes = [
   },
   {
     name: 'DayTraining',
-    component: DayTrainingScreen
+    component: DayTrainingScreen,
+    options: ({ route }) => ({
+      title: get(route, 'params.date')
+    })
   }
 ]
 

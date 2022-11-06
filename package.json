@@ -5,7 +5,8 @@
   "scripts": {
     "client": "yarn --cwd ./mobile start",
     "server": "yarn --cwd ./server start",
-    "serverDev": "yarn --cwd ./server dev"
+    "serverDev": "yarn --cwd ./server dev",
+    "studio": "yarn --cwd ./server prisma studio"
   },
   "license": "MIT",
   "dependencies": {}

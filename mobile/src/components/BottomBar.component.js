@@ -7,26 +7,19 @@ import { useTimer } from '../hooks'
 import { get } from 'lodash'
 
 export const BottomBar = ({ onPress = () => {} }) => {
-  const [playing, togglePlaying] = useToggle()
   const navigation = useNavigation()
   const {
     value: timer,
     formatted: formattedTimer,
     play,
     pause,
-    reset
+    reset,
+    playing
   } = useTimer()
 
   const handleTimer = () => {
-    if (playing) {
-      pause()
-      togglePlaying(false)
-      return
-    } else {
-      play()
-      togglePlaying(true)
-      return
-    }
+    if (playing) pause()
+    else play()
   }
 
   const showResetButton =

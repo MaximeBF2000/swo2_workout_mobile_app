@@ -8,9 +8,12 @@ export const TextField = ({
   textStyle,
   value,
   onChangeText = () => {},
+  placeholder,
   clearButtonMode,
   autoCapitalize,
   secure,
+  numberOfLines = 1,
+  keyboardType,
   ...props
 }) => {
   const [showEntry, toggleShowEntry] = useToggle()
@@ -27,6 +30,10 @@ export const TextField = ({
         secureTextEntry={secure && !showEntry}
         onFocus={() => toggleFocusing(true)}
         onBlur={() => toggleFocusing(false)}
+        placeholder={placeholder}
+        numberOfLines={numberOfLines}
+        multiline={numberOfLines > 1}
+        keyboardType={keyboardType}
         {...props}
       />
       {secure && focusing && (

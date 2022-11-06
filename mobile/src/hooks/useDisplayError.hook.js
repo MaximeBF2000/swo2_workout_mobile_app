@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ErrorDisplayer } from '../components'
+import { ErrorDisplayer } from '../components/ErrorDisplayer.component'
 
 export const useDisplayError = () => {
   const [errorComponent, setErrorComponent] = useState(<></>)

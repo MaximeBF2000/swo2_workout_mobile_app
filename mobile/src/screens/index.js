@@ -1,5 +1,5 @@
 export { TrainingsScreen } from './Trainings.screen'
-export { SessionsScreen } from './Sessions.screen'
+export { WorkoutsScreen } from './Workouts.screen'
 export { ExercicesScreen } from './Exercices.screen'
 export { SeriesScreen } from './Series.screen'
 export { AllExercicesScreen } from './AllExercices.screen'

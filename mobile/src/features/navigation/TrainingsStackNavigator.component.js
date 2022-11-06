@@ -1,5 +1,5 @@
 import tw from 'twrnc'
-import { map } from 'lodash'
+import { map, get } from 'lodash'
 import { Pressable } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { Ionicons } from '@expo/vector-icons'
@@ -7,7 +7,7 @@ import { genId } from '../../utils/string'
 import {
   ExercicesScreen,
   SeriesScreen,
-  SessionsScreen,
+  WorkoutsScreen,
   TrainingsScreen
 } from '../../screens'
 import { HeaderEditButton } from '../../components'
@@ -33,28 +33,29 @@ const stackRoutes = [
     }
   },
   {
-    name: 'Sessions',
-    component: SessionsScreen
+    name: 'Workouts',
+    component: WorkoutsScreen,
+    options: ({ route }) => ({
+      title: get(route, 'params.trainingName')
+    })
   },
   {
     name: 'Exercices',
-    component: ExercicesScreen
+    component: ExercicesScreen,
+    options: ({ route }) => ({
+      title: get(route, 'params.workoutName')
+    })
   },
   {
     name: 'Series',
-    component: SeriesScreen
+    component: SeriesScreen,
+    options: ({ route }) => ({
+      title: get(route, 'params.exerciceName')
+    })
   }
 ]
 
-const screenOptions = {
-  headerRight: ({ color }) => {
-    const { dispatch } = useStore()
-
-    const handlePress = () => dispatch('toggleEditMode')
-
-    return <HeaderEditButton onPress={handlePress} color={color} />
-  }
-}
+const screenOptions = { headerRight: HeaderEditButton }
 
 export const TrainingsStackNavigator = () => {
   return (

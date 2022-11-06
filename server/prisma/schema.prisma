@@ -15,7 +15,6 @@ model User {
   password String
   trainings Training[]
   workouts Workout[]
-  sessions Session[]
   series Serie[]
   exercices Exercice[]
 }
@@ -23,7 +22,7 @@ model User {
 model Training {
   id Int @id @default(autoincrement())
   name String
-  description String
+  description String @default("")
   workouts Workout[]
   user User @relation(fields: [userId], references: [id])
   userId Int
@@ -32,35 +31,26 @@ model Training {
 model Workout {
   id Int @id @default(autoincrement())
   name String
-  description String
-  sessions Session[]
+  description String @default("")
+  exercices Exercice[]
+  series Serie[]
   training Training @relation(fields: [trainingId], references: [id])
   trainingId Int
   user User @relation(fields: [userId], references: [id])
   userId Int
 }
 
-model Session {
-  id Int @id @default(autoincrement())
-  date DateTime @default(now())
-  workout Workout @relation(fields: [workoutId], references: [id])
-  workoutId Int
-  series Serie[]
-  exercices Exercice[]
-  user User @relation(fields: [userId], references: [id])
-  userId Int
-}
-
 model Serie {
   id Int @id @default(autoincrement())
-  reps Int
-  weight Float
-  note String
+  date DateTime @default(now())
+  reps Int @default(0)
+  weight Float @default(0)
+  note String @default("")
   spoted Boolean @default(false)
   exercice Exercice @relation(fields: [exerciceId], references: [id])
   exerciceId Int
-  session Session @relation(fields: [sessionId], references: [id])
-  sessionId Int
+  workout Workout @relation(fields: [workoutId], references: [id])
+  workoutId Int
   user User @relation(fields: [userId], references: [id])
   userId Int
 }
@@ -68,10 +58,10 @@ model Serie {
 model Exercice {
   id Int @id @default(autoincrement())
   name String
-  description String
+  description String @default("")
   category ExerciceCategory @relation(fields: [categoryId], references: [id])
   categoryId Int
-  sessions Session[]
+  workouts Workout[]
   series Serie[]
   user User @relation(fields: [userId], references: [id])
   userId Int

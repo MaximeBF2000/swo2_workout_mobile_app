@@ -1,30 +1,26 @@
 import { ScrollView } from 'react-native'
 import { get, map, isEmpty, isArray } from 'lodash'
-import useSWR from 'swr'
 import {
   BottomBar,
-  EditableTraining,
+  EditableListItem,
   NoTraining,
-  TrainingListItem
+  ListItem
 } from '../components'
 import { useStore } from '../features/store'
-import { ApiClient, axiosGetFetcher } from '../features/apiClient'
+import { ApiClient, apiUris, useAxiosSWR } from '../features/apiClient'
 import { useOnMount, useToggle } from '../hooks'
 
 export const TrainingsScreen = ({ navigation }) => {
   const { user, inEditMode, dispatch } = useStore()
   const [showAddTraining, toggleShowAddTraining] = useToggle()
 
-  const trainingsUri = `/api/trainings?userId=${get(user, 'id')}`
-  const { data, mutate } = useSWR(trainingsUri, axiosGetFetcher)
+  const { data, mutate } = useAxiosSWR(apiUris.trainingsByUser(get(user, 'id')))
   const trainings = get(data, 'trainings', [])
 
-  useOnMount(() => mutate(trainingsUri))
+  useOnMount(() => mutate(apiUris.trainingsByUser(get(user, 'id'))))
 
-  const navigateToSession = trainingId =>
-    navigation.navigate('Sessions', { trainingId })
-
-  const toggleEditMode = () => dispatch('toggleEditMode')
+  const navigateToWorkout = (trainingId, trainingName) =>
+    navigation.navigate('Workouts', { trainingId, trainingName })
 
   const createTraining = async ({ title, description }) => {
     const training = await ApiClient.createTraining({
@@ -33,13 +29,16 @@ export const TrainingsScreen = ({ navigation }) => {
       description
     })
 
-    mutate(trainingsUri)
+    mutate(apiUris.trainingsByUser(get(user, 'id')))
+    toggleShowAddTraining(false)
 
-    navigation.navigate('Sessions', { trainingId: get(training, 'id') })
+    navigation.navigate('Workouts', {
+      trainingId: get(training, 'id'),
+      trainingName: get(training, 'name')
+    })
   }
 
   const editTraining = () => {}
-
   const deleteTraining = () => {}
 
   return (
@@ -48,23 +47,25 @@ export const TrainingsScreen = ({ navigation }) => {
         {isArray(trainings) && !isEmpty(trainings) ? (
           map(trainings, training =>
             inEditMode ? (
-              <EditableTraining
+              <EditableListItem
                 key={get(training, 'id')}
                 titlePlaceholder="Title"
                 descriptionPlaceholder="Description"
-                defaultTitle={training?.name}
-                defaultDescription={training?.description}
+                defaultTitle={get(training, 'name')}
+                defaultDescription={get(training, 'description')}
                 onEdit={() => {}}
                 onDelete={() => {}}
-                onClose={toggleEditMode}
+                onClose={() => dispatch('toggleEditMode')}
                 actions={['edit', 'delete']}
               />
             ) : (
-              <TrainingListItem
+              <ListItem
                 key={get(training, 'id')}
                 title={get(training, 'name')}
                 description={get(training, 'description')}
-                onPress={() => navigateToSession(get(training, 'id'))}
+                onPress={() =>
+                  navigateToWorkout(get(training, 'id'), get(training, 'name'))
+                }
               />
             )
           )
@@ -76,10 +77,10 @@ export const TrainingsScreen = ({ navigation }) => {
           />
         )}
         {showAddTraining && (
-          <EditableTraining
+          <EditableListItem
             titlePlaceholder="Training title"
             descriptionPlaceholder="Training description"
-            onPress={createTraining}
+            onAdd={createTraining}
             onClose={() => toggleShowAddTraining(false)}
             actions={['add']}
           />

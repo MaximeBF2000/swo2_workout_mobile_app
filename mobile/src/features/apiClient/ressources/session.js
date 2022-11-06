@@ -13,8 +13,8 @@ export async function _removeSession(sessionId) {
   return sessionId
 }
 
-export async function _getSessions(trainingId) {
-  const { data } = await server.get(`/api/sessions/${trainingId}`)
+export async function _getSessions(workoutId) {
+  const { data } = await server.get(`/api/sessions?workoutId=${workoutId}`)
 
   return get(data, 'session')
 }

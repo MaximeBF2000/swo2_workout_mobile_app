@@ -1,1 +1,1 @@
-export { incrementTimer, resetTimer } from './timer.actions'
+export { incrementTimer, resetTimer, setTimerPlaying } from './timer.actions'

@@ -1,5 +1,5 @@
 import { get } from 'lodash'
-import { incrementTimer, resetTimer } from './actions'
+import { incrementTimer, resetTimer, setTimerPlaying } from './actions'
 
 export const storeReducer = (state, action) => {
   const payload = get(action, 'payload')
@@ -9,6 +9,8 @@ export const storeReducer = (state, action) => {
       return incrementTimer(state)
     case 'resetTimer':
       return resetTimer(state)
+    case 'setTimerPlaying':
+      return setTimerPlaying(state, payload)
     case 'toggleEditMode':
       return { ...state, inEditMode: !get(state, 'inEditMode') }
     case 'setUser':

@@ -1,0 +1,38 @@
+[
+  { "categoryId": 1, "name": "Push ups" },
+  { "categoryId": 1, "name": "Dumbell press" },
+  { "categoryId": 1, "name": "Bench press" },
+  { "categoryId": 1, "name": "Inclined dumbell press" },
+  { "categoryId": 1, "name": "Inclined bench press" },
+  { "categoryId": 1, "name": "Declined dumbell press" },
+  { "categoryId": 1, "name": "Declined bench press" },
+  { "categoryId": 1, "name": "Cable down crossover" },
+  { "categoryId": 1, "name": "Butterfly" },
+
+  { "categoryId": 2, "name": "Lat pulldown" },
+  { "categoryId": 2, "name": "Pull ups" },
+  { "categoryId": 2, "name": "Rowing cable" },
+  { "categoryId": 2, "name": "Unilateral dumbell rowing" },
+  { "categoryId": 2, "name": "Rowing T-Bar" },
+
+  { "categoryId": 3, "name": "Military dumbell press" },
+  { "categoryId": 3, "name": "Military bench press" },
+  { "categoryId": 3, "name": "Lateral dumbell raise" },
+  { "categoryId": 3, "name": "Front dumbell raise" },
+
+  { "categoryId": 4, "name": "Squat" },
+  { "categoryId": 4, "name": "Deadlift" },
+  { "categoryId": 4, "name": "Leg press" },
+  { "categoryId": 4, "name": "Hacksquat" },
+  { "categoryId": 4, "name": "Leg extension" },
+  { "categoryId": 4, "name": "Leg curl" },
+  { "categoryId": 4, "name": "Calf raise" },
+  { "categoryId": 4, "name": "Calf press" },
+
+  { "categoryId": 5, "name": "Dumbell curl" },
+  { "categoryId": 5, "name": "Dumbell hammer curl" },
+  { "categoryId": 5, "name": "Curl" },
+  { "categoryId": 5, "name": "Dips" },
+  { "categoryId": 5, "name": "Triceps forhead bar" },
+  { "categoryId": 5, "name": "Triceps cable pulldown" }
+]
