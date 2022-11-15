@@ -1,39 +1,52 @@
 import tw from 'twrnc'
-import { useState } from 'react'
-import { ScrollView, Text } from 'react-native'
+import { ScrollView } from 'react-native'
 import { get, isEmpty, map } from 'lodash'
+import moment from 'moment'
 import {
   BottomBar,
   EditableSerieBox,
   NoteModal,
   SeriesBox
 } from '../components'
-import { useToggle } from '../hooks'
-import { ApiClient, apiUris, useAxiosSWR } from '../features/apiClient'
+import { useEditSerie, useSerieModals } from '../hooks'
+import { apiUris, useAxiosSWR } from '../features/apiClient'
 import { useStore } from '../features/store'
-
-const SERIES_BY_DATES = {
-  '10/09/2022': [
-    { reps: 12, weight: 20, note: '', spoted: true },
-    { reps: 10, weight: 18, note: 'struggled', spoted: false }
-  ]
-}
 
 export const SeriesScreen = ({ route }) => {
   const exerciceId = get(route, 'params.exerciceId')
   const workoutId = get(route, 'params.workoutId')
   const { user } = useStore()
-  const [editingSerie, setEditingSerie] = useState(null)
-  const [note, setNote] = useState(null)
-  const [showGlobalAddSerie, toggleShowGlobalAddSerie] = useToggle()
-  const [showAddSerie, toggleShowAddSerie] = useToggle()
-  const { data: seriesData } = useAxiosSWR(
+  const { data: seriesData, mutate } = useAxiosSWR(
     apiUris.seriesByExercice(workoutId, exerciceId)
   )
   const series = get(seriesData, 'series')
 
-  const addSerie = async ({ weight, reps, note, spoted }) => {
-    await ApiClient.addSerieToWorkoutAndExercice({
+  const today = moment(new Date()).format('DD/MM/YYYY')
+  const todaySeries = get(series, today)
+
+  const { addSerie, deleteSerie, editSerie, toggleSpoted } = useEditSerie({
+    mutate
+  })
+
+  const {
+    editingSerie,
+    addSerieInfo,
+    note,
+    showGlobalAddSerie,
+    toggleShowGlobalAddSerie,
+    closeGlobalModal,
+    closeEditingModal,
+    closeAddModal,
+    closeEditingModalAfter,
+    closeGlobalModalAfter,
+    closeAddModalAfter,
+    setAddSerieInfo,
+    setEditingSerie,
+    setNote
+  } = useSerieModals()
+
+  const addNewSerie = async ({ weight, reps, note, spoted }) => {
+    const newSerie = {
       weight,
       reps,
       note,
@@ -41,15 +54,20 @@ export const SeriesScreen = ({ route }) => {
       exerciceId,
       workoutId,
       userId: get(user, 'id')
-    })
+    }
+
+    if (addSerieInfo) {
+      const addSerieInfoFormattedDate = addSerieInfo
+        ?.split('/')
+        ?.reverse()
+        ?.map(e => parseInt(e))
+        ?.join('-')
+
+      newSerie.date = new Date(addSerieInfoFormattedDate)
+    }
+
+    await addSerie(newSerie)
   }
-
-  const addSerieToADay = () => {}
-
-  const editSerie = async serie => await ApiClient.updateSerie(serie)
-
-  const toggleSpoted = async spoted =>
-    await ApiClient.updateSerie({ spoted: !spoted })
 
   return (
     <>
@@ -57,28 +75,36 @@ export const SeriesScreen = ({ route }) => {
         <EditableSerieBox
           modalTitle="Edit Serie"
           defaults={editingSerie}
-          onSave={editSerie}
+          onSave={closeEditingModalAfter(editSerie)}
+          onDelete={closeEditingModalAfter(deleteSerie)}
+          onClose={closeEditingModal}
           actions={['save', 'delete']}
-          onClose={() => setEditingSerie(null)}
         />
       )}
       {showGlobalAddSerie && (
         <EditableSerieBox
           modalTitle="Add Serie"
-          onSave={addSerie}
-          onClose={() => toggleShowGlobalAddSerie(false)}
+          onSave={closeGlobalModalAfter(addNewSerie)}
+          onClose={closeGlobalModal}
         />
       )}
-      {showAddSerie && (
+      {addSerieInfo && (
         <EditableSerieBox
-          modalTitle="Add Serie"
-          onSave={addSerie}
-          onClose={() => toggleShowAddSerie(false)}
+          modalTitle="Add serie"
+          onSave={closeAddModalAfter(addNewSerie)}
+          onClose={closeAddModal}
         />
       )}
       {note && <NoteModal note={note} onClose={() => setNote(null)} />}
-      <Text>No Series here</Text>
+
       <ScrollView style={tw`px-2 mt-8 mb-12`}>
+        {!todaySeries && (
+          <SeriesBox
+            title={today}
+            onAddSerie={() => setAddSerieInfo(today)}
+            style={tw`mb-8`}
+          />
+        )}
         {map(series, (seriesByDate, date) => (
           <SeriesBox
             key={date}
@@ -86,9 +112,9 @@ export const SeriesScreen = ({ route }) => {
             series={seriesByDate}
             style={tw`mb-8`}
             onToggleSpoted={toggleSpoted}
-            onShowNote={note => setNote(note)}
+            onShowNote={setNote}
             onEditSerie={serie => setEditingSerie(serie)}
-            onAddSerie={() => toggleShowAddSerie(true)}
+            onAddSerie={() => setAddSerieInfo(date)}
           />
         ))}
       </ScrollView>

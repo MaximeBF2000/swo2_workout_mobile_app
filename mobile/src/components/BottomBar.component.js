@@ -2,11 +2,10 @@ import tw from 'twrnc'
 import { View, Text, Pressable } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { FontAwesome } from '@expo/vector-icons'
-import { useToggle } from '../hooks'
 import { useTimer } from '../hooks'
 import { get } from 'lodash'
 
-export const BottomBar = ({ onPress = () => {} }) => {
+export const BottomBar = ({ onPress = () => {}, showAddButton = true }) => {
   const navigation = useNavigation()
   const {
     value: timer,
@@ -27,7 +26,10 @@ export const BottomBar = ({ onPress = () => {} }) => {
 
   return (
     <Pressable
-      style={tw`absolute flex-row items-center justify-between bottom-0 w-full bg-white py-4 pl-8 pr-32 border-t border-gray-100`}
+      style={[
+        tw`absolute flex-row items-center justify-between bottom-0 w-full bg-white py-4 pl-8 border-t border-gray-100`,
+        showAddButton ? tw`pr-32` : tw`pr-8`
+      ]}
       onPress={() => navigation.navigate('Timer')}
     >
       <Text>{formattedTimer}</Text>
@@ -45,12 +47,14 @@ export const BottomBar = ({ onPress = () => {} }) => {
           />
         </Pressable>
       </View>
-      <Pressable
-        style={tw`absolute bottom-full right-8 w-12 h-12 rounded-full bg-blue-500 border border-blue-600 justify-center items-center`}
-        onPress={onPress}
-      >
-        <Text style={tw`text-white text-2xl`}>+</Text>
-      </Pressable>
+      {showAddButton && (
+        <Pressable
+          style={tw`absolute bottom-full right-8 w-12 h-12 rounded-full bg-blue-500 border border-blue-600 justify-center items-center`}
+          onPress={onPress}
+        >
+          <Text style={tw`text-white text-2xl`}>+</Text>
+        </Pressable>
+      )}
     </Pressable>
   )
 }

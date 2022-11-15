@@ -1,6 +1,7 @@
 export { useToggle } from './useToggle.hook'
 export { useFormState } from './useFormState.hook'
 export { useDisplayError } from './useDisplayError.hook'
+export { useEditSerie, useSerieModals } from './useEditSerie.hook'
 export { useOnMount } from './useOnMount.hook'
 export { useTimer } from './useTimer.hook'
 export { useLogger } from './useLogger.hook'

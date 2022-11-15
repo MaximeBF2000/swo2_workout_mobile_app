@@ -1,18 +1,10 @@
 import tw from 'twrnc'
 import { View, Text, Pressable } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
-import { get } from 'lodash'
 import { useTimer } from '../hooks'
 
 export const TimerScreen = () => {
-  const {
-    value: timer,
-    formatted: formattedTimer,
-    play,
-    pause,
-    reset,
-    playing
-  } = useTimer()
+  const { formatted: formattedTimer, play, pause, reset, playing } = useTimer()
 
   const handleTimer = () => {
     if (playing) {

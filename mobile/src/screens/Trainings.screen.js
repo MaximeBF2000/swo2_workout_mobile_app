@@ -38,8 +38,17 @@ export const TrainingsScreen = ({ navigation }) => {
     })
   }
 
-  const editTraining = () => {}
-  const deleteTraining = () => {}
+  const editTraining = async ({ id, name: _, title, ...training }) => {
+    await ApiClient.updateTraining(id, { name: title, ...training })
+    dispatch('toggleEditMode')
+    mutate()
+  }
+
+  const deleteTraining = async ({ id }) => {
+    await ApiClient.removeTraining(id)
+    dispatch('toggleEditMode')
+    mutate()
+  }
 
   return (
     <>
@@ -53,8 +62,9 @@ export const TrainingsScreen = ({ navigation }) => {
                 descriptionPlaceholder="Description"
                 defaultTitle={get(training, 'name')}
                 defaultDescription={get(training, 'description')}
-                onEdit={() => {}}
-                onDelete={() => {}}
+                item={training}
+                onEdit={editTraining}
+                onDelete={deleteTraining}
                 onClose={() => dispatch('toggleEditMode')}
                 actions={['edit', 'delete']}
               />

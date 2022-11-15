@@ -1,4 +1,3 @@
-import tw from 'twrnc'
 import { ScrollView } from 'react-native'
 import { map, get, isArray, isEmpty } from 'lodash'
 import {
@@ -12,8 +11,8 @@ import { useOnMount } from '../hooks'
 import { useStore } from '../features/store'
 
 export const ExercicesScreen = ({ navigation, route }) => {
+  const { inEditMode, dispatch } = useStore()
   const workoutId = get(route, 'params.workoutId')
-  const { inEditMode } = useStore()
   const { data, mutate } = useAxiosSWR(apiUris.exercicesByWorkout(workoutId))
   const exercices = get(data, 'exercices')
 

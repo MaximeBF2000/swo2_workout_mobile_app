@@ -1,4 +1,3 @@
-import tw from 'twrnc'
 import { View } from 'react-native'
 import { get, map, isArray, isEmpty } from 'lodash'
 import {
@@ -41,13 +40,21 @@ export const WorkoutsScreen = ({ navigation, route }) => {
     })
   }
 
-  const editWorkout = () => {}
-  const deleteWorkout = () => {}
+  const editWorkout = async ({ id, name: _, title, ...workout }) => {
+    await ApiClient.updateWorkout(id, { name: title, ...workout })
+    dispatch('toggleEditMode')
+    mutate()
+  }
+
+  const deleteWorkout = async ({ id }) => {
+    await ApiClient.removeWorkout(id)
+    dispatch('toggleEditMode')
+    mutate()
+  }
 
   return (
     <>
       <View>
-        {/* <ListItem title="Workout 1" description="Description 1" /> */}
         {isArray(workouts) && !isEmpty(workouts) ? (
           map(workouts, workout =>
             inEditMode ? (
@@ -57,8 +64,8 @@ export const WorkoutsScreen = ({ navigation, route }) => {
                 descriptionPlaceholder="Description"
                 defaultTitle={get(workout, 'name')}
                 defaultDescription={get(workout, 'description')}
-                onEdit={() => {}}
-                onDelete={() => {}}
+                onEdit={editWorkout}
+                onDelete={deleteWorkout}
                 onClose={() => dispatch('toggleEditMode')}
                 actions={['edit', 'delete']}
               />

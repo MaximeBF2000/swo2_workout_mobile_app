@@ -12,7 +12,6 @@ import {
 } from '../../screens'
 import { HeaderEditButton } from '../../components'
 import { useLogout } from '../../screens/Login/login.utils'
-import { useStore } from '../store'
 
 const Stack = createStackNavigator()
 

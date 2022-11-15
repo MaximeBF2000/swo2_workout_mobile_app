@@ -65,7 +65,9 @@ export const SeriesBox = ({
                     <FontAwesome name="trash-o" size={20} color="black" />
                   )}
                   <Pressable
-                    onPress={() => onToggleSpoted(get(serie, 'spoted'))}
+                    onPress={() =>
+                      onToggleSpoted(get(serie, 'spoted'), get(serie, 'id'))
+                    }
                   >
                     <MaterialCommunityIcons
                       name={

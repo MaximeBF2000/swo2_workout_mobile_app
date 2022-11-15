@@ -2,17 +2,24 @@ import { get } from 'lodash'
 import { server } from '../serverInstance'
 
 export async function _createWorkout(workout) {
-  const { data } = await server.post(`/api/workouts`, workout)
+  const { data } = await server.post('/api/workouts', workout)
 
   return get(data, 'workout')
 }
 
-export async function _updateWorkout(workoutId) {
-  return workoutId
+export async function _updateWorkout(workoutId, workout) {
+  const { data } = await server.put(
+    '/api/workouts',
+    JSON.stringify({ ...workout, id: workoutId })
+  )
+
+  return get(data, 'workout')
 }
 
 export async function _removeWorkout(workoutId) {
-  return workoutId
+  const { data } = await server.delete(`/api/workout?workoutId=${workoutId}`)
+
+  return get(data, 'workout')
 }
 
 export async function _getWorkouts(trainingId) {

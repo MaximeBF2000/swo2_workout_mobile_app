@@ -30,7 +30,7 @@ export const AllExercicesScreen = ({ navigation, route }) => {
 
   const addExercice = async exerciceId => {
     await ApiClient.addExerciceToWorkout(workoutId, exerciceId)
-    mutate(apiUris.exercicesByWorkout(workoutId)) // Update UI in ExerciceScreen
+    mutate(apiUris.exercicesByWorkout(workoutId))
     backToExercices()
   }
 

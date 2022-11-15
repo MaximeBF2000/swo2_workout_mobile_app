@@ -11,6 +11,7 @@ export const EditableListItem = ({
   defaultDescription = '',
   hideCloseButton = false,
   actions = ['add', 'edit', 'delete'],
+  item = {},
   onAdd = () => {},
   onEdit = () => {},
   onDelete = () => {},
@@ -19,15 +20,19 @@ export const EditableListItem = ({
   const [title, setTitle] = useState(defaultTitle)
   const [description, setDescription] = useState(defaultDescription)
 
-  const onPressFunc = onPressFn => () => onPressFn({ title, description })
+  const onPressFunc = onPressFn => () =>
+    onPressFn({ ...item, title, description })
   const handleAdd = onPressFunc(onAdd)
   const handleEdit = onPressFunc(onEdit)
   const handleDelete = onPressFunc(onDelete)
 
   return (
     <View
-      style={tw`relative flex-row justify-between items-center bg-white py-4 px-8 border-b border-gray-100`}
+      style={tw`relative flex-row justify-between items-center bg-white py-4 px-4 border-b border-gray-100`}
     >
+      {/* <View style={tw`mr-4`}>
+        <FontAwesome name="reorder" size={20} color="grey" />
+      </View> */}
       <View style={tw`flex-1 mr-12`}>
         <TextField
           value={title}

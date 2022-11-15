@@ -22,7 +22,7 @@ export const AllExercicesDisplayer = ({ navigation, route }) => {
   const backToExercices = () => navigation.goBack()
 
   const addExercice = async exerciceId => {
-    const workout = await ApiClient.addExerciceToWorkout(workoutId, exerciceId)
+    await ApiClient.addExerciceToWorkout(workoutId, exerciceId)
     backToExercices()
   }
 

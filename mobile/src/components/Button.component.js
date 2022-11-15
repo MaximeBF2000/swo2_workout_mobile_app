@@ -1,5 +1,5 @@
 import tw from 'twrnc'
-import { View, Text, Pressable } from 'react-native'
+import { Text, Pressable } from 'react-native'
 import React from 'react'
 
 export const Button = ({ onPress = () => {}, title, style, textStyle }) => {

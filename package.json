@@ -1,13 +1,20 @@
 {
   "name": "swo_2",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "mobile/index.js",
   "scripts": {
     "client": "yarn --cwd ./mobile start",
     "server": "yarn --cwd ./server start",
     "serverDev": "yarn --cwd ./server dev",
-    "studio": "yarn --cwd ./server prisma studio"
+    "studio": "yarn --cwd ./server prisma studio",
+    "lint": "yarn eslint ."
   },
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {},
+  "repository": "git@github.com:MaximeBF2000/swo2_workout_mobile_app.git",
+  "author": "Maxime FERRET <maxime.bounaas@gmail.com>",
+  "devDependencies": {
+    "eslint": "^8.27.0",
+    "eslint-plugin-react": "^7.31.10"
+  }
 }

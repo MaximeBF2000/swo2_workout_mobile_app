@@ -1,6 +1,6 @@
 import tw from 'twrnc'
 import { useState } from 'react'
-import { View, Text, ScrollView, Pressable } from 'react-native'
+import { Text, ScrollView, Pressable } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
 import { get, map } from 'lodash'
 import { useToggle } from '../hooks'

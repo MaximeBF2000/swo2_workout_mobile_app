@@ -26,3 +26,22 @@ export const getTrainingByUser = async (req, res) => {
 
   return res.json({ trainings })
 }
+
+export const deleteTraining = async (req, res) => {
+  const deletedTraining = await prisma.training.delete({
+    where: { id: parseInt(req?.query?.trainingId) }
+  })
+
+  return res.json({ training: deletedTraining })
+}
+
+export const updateTraining = async (req, res) => {
+  const { id, ...body } = req?.body ?? EMPTY_OBJECT
+
+  const updatedTraining = await prisma.training.update({
+    data: body,
+    where: { id }
+  })
+
+  return res.json({ training: updatedTraining })
+}

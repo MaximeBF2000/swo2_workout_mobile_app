@@ -16,6 +16,7 @@ export const EditableSerieBox = ({
   onSave = () => {},
   onDelete = () => {},
   onClose = () => {},
+  // eslint-disable-next-line no-inline-comments
   actions = ['save'] // ['save', 'delete']
 }) => {
   const {
@@ -35,12 +36,12 @@ export const EditableSerieBox = ({
   const onPlus =
     (setFn, value = 1) =>
     () =>
-      setFn(prev => prev + value)
+      setFn(prev => parseFloat(prev) + value)
 
   const onMinus =
     (setFn, value = 1) =>
     () =>
-      setFn(prev => prev - value)
+      setFn(prev => parseFloat(prev) - value)
 
   const onChange = setFn => value => setFn(value)
 

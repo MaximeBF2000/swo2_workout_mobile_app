@@ -10,7 +10,7 @@ import { useSWRConfig } from 'swr'
 const EMPTY_OBJECT = {}
 
 const checkForCredentials = (creds, options) => {
-  return new Promise(async (resolve, reject) => {
+  return new Promise((resolve, reject) => {
     const errors = checkCreds(creds, options)
     if (errors.length === 0) return resolve()
 

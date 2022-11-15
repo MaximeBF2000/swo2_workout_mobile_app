@@ -28,16 +28,6 @@ export const getWorkoutByTraining = async (req, res) => {
   return res.json({ workouts })
 }
 
-// const getWorkoutById = async () => {
-//   const { workoutId } = req?.query ?? EMPTY_OBJECT
-
-//   const workout = await prisma.workout.findFirst({
-//     where: { trainingId: parseInt(workoutId) }
-//   })
-
-//   return res.json({ workout })
-// }
-
 export const addExerciceToWorkout = async (req, res) => {
   const { workoutId, exerciceId } = req?.body ?? EMPTY_OBJECT
 
@@ -49,4 +39,31 @@ export const addExerciceToWorkout = async (req, res) => {
   })
 
   return res.json({ workout })
+}
+
+export const deleteWorkout = async (req, res) => {
+  // Disconnect exercices from the workout
+
+  // await prisma.workout.update({
+  //   data: {
+  //     exercices: { disconnect: true }
+  //   }
+  // })
+
+  const deletedWorkout = await prisma.workout.delete({
+    where: { id: req?.query?.workoutId }
+  })
+
+  return res.json({ workout: deletedWorkout })
+}
+
+export const updateWorkout = async (req, res) => {
+  const { id, ...body } = req?.body ?? EMPTY_OBJECT
+
+  const updatedWorkout = await prisma.workout.update({
+    data: body,
+    where: { id }
+  })
+
+  return res.json({ workout: updatedWorkout })
 }
